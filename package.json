@@ -1,0 +1,15 @@
+{
+  "name": "team-slack-bot",
+  "version": "1.0.0",
+  "description": "Slack bot to help organize team activities",
+  "main": "server.js",
+  "repository": "https://github.com/juanflo/team-slack-bot.git",
+  "author": "Juan Flores <juan.flores@libertymutual.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "scripts": {
+    "start": "node src/server.js"
+  }
+}
