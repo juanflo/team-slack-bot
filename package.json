@@ -7,7 +7,9 @@
   "author": "Juan Flores <juan.flores@libertymutual.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3"
+    "@slack/client": "^4.2.2",
+    "express": "^4.16.3",
+    "request": "^2.87.0"
   },
   "scripts": {
     "start": "node src/server.js"
