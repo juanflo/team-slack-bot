@@ -15,9 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get(API, (req, res) => res.status(200).send('Hello slack!'));
 
 app.post(`${API}/random-facilitator`, (req, res) => {
-    console.log(req);
     res.set('Content-Type', 'application/json');
     res.status(200).send(getFrequencyMessage());
+});
+
+app.post(`${API}/frequency`, (req, res) => {
+    console.log(req);
 });
 
 app.post(`${API}/schedule`, (req, res) => {
