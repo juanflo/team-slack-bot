@@ -37,14 +37,9 @@ app.post(`${API}/random-facilitator`, (req, res) => {
 app.post(`${API}/frequency`, (req, res) => {
 console.log('/frequency');
     const payload = JSON.parse(req.body.payload);
-    console.log(payload);
     const callback_id = payload.callback_id;
     const channel_id = payload.channel.id;
     const user_id = payload.user.id;
-
-    
-    console.log(`callback_id: ${callback_id}, channel_id: ${channel_id}, user_id: ${user_id}`);
-    console.log(payload.actions[0].value);
 
     switch(callback_id) {
         case 'randy_frequency': _saveScheduling(user_id, channel_id, 'frequency', payload.actions[0].value);
@@ -70,8 +65,9 @@ app.use((err, req, res, next) => {
 app.listen(port, () => console.log(`bot listening on port ${port}`));
 
 function _saveScheduling(user_id, channel_id, type, typeData) {
+    console.log('save scheduling');
     SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
-        console.log(data, err);
+        console.log('data search ', data, err);
         let newData = data == null ? new SchedulingSession() : data;
         newData.user_id = user_id;
         newData.channel_id = channel_id;
