@@ -123,7 +123,7 @@ function _setupSchedule(user_id, channel_id, type) {
                 case 'one-minute':
                     const currentTime = moment().add(1, 'm');
                     console.log(currentTime.utc().format('YYYYMMDDHHmm'));
-                    let saveDate = new ScheduleSession({
+                    let saveDate = new Schedule({
                         alert_time: currentTime.utc().format('YYYYMMDDHHmm'),
                         channel_id: channel_id
                     });
