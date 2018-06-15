@@ -36,7 +36,7 @@ app.post(`${API}/random-facilitator`, (req, res) => {
 
 app.post(`${API}/frequency`, (req, res) => {
 console.log('/frequency');
-    const payload = req.body.payload;
+    const payload = JSON.parse(req.body.payload);
     console.log(payload);
     const callback_id = payload.callback_id;
     const channel_id = payload.channel.id;
