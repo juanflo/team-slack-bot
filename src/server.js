@@ -88,10 +88,9 @@ function sendNewSelectionToChannel(channel_id) {
             const name = JSON.parse(body).user.real_name;
             const msg = interactiveResponse.getUserPickedMessage(name);
             const options = {
-                url: `https://slack.com/api/chat.postMessage`,
+                url: `https://slack.com/api/chat.postMessage?token=${oauth_token}`,
                 method: 'POST',
                 'Content-Type': 'application/json',
-                token: oauth_token,
                 text: `${name} has been picked!`,
                 channel: channel_id
             }
