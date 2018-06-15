@@ -41,6 +41,8 @@ app.post(`${API}/frequency`, (req, res) => {
     const channel_id = payload.channel.id;
     const user_id = payload.user.id;
 
+    console.log(`callback_id: ${callback_id}, channel_id: ${channel_id}, user_id: ${user_id}`);
+
     console.log(payload.actions[0].selected_options[0].value);
     switch(callback_id) {
         case 'randy_frequency': _saveScheduling(user_id, channel_id, 'frequency', payload.actions[0].selected_options[0].value);
