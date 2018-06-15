@@ -44,10 +44,10 @@ console.log('/frequency');
 
     
     console.log(`callback_id: ${callback_id}, channel_id: ${channel_id}, user_id: ${user_id}`);
-    console.log(payload.actions[0].selected_options[0].value);
+    console.log(payload.actions[0].selected_options.value);
 
     switch(callback_id) {
-        case 'randy_frequency': _saveScheduling(user_id, channel_id, 'frequency', payload.actions[0].selected_options[0].value);
+        case 'randy_frequency': _saveScheduling(user_id, channel_id, 'frequency', payload.actions[0].selected_options.value);
     }
 
     if (callback_id === CALLBACK_ID.FREQUENCY) {
