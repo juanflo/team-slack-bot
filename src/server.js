@@ -77,11 +77,11 @@ app.listen(port, () => console.log(`bot listening on port ${port}`));
 
 function sendNewSelectionToChannel(channel_id) {
     request.get(`https://slack.com/api/channels.info?token=${verification_token}&channel=${channel_id}`, (error, response, body) => {
-        console.log(`channel info: ${JSON.parse(body)}`);
+        console.log(`channel info: ${body}`);
         const members = JSON.parse(body).channel.members;
         const randomUser = members[Math.floor(Math.random() * members.length)];
 
-        request.get(`https://slack.com/api/channels.info?token=${verification_token}&user=${randomUser}`, (error, response, body) => {
+        request.get(`https://slack.com/api/users.info?token=${verification_token}&user=${randomUser}`, (error, response, body) => {
             console.log(`channel: ${channel_id}`);
             console.log(JSON.parse(body));
             const name = JSON.parse(body).user.real_name;
