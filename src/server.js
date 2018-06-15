@@ -98,7 +98,7 @@ function sendNewSelectionToChannel(channel_id) {
                 }
             }
             request(options, (error, response, body) => {
-                console.log(`Error sending post message: error:${error} response:${response} body:${body}`)
+                console.log(`Error sending post message: error:${error} response:${JSON.stringify(response)} body:${JSON.stringify(body)}`)
             })
             // const options = {
             //     url: 'https://slack.com/api/chat.postMessage',
