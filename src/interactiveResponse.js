@@ -12,25 +12,32 @@ module.exports =  {
                     'attachment_type': 'default',
                     'actions': [
                         {
-                            'name': 'frequncy',
+                            'name': 'frequency',
                             'text': '1 minute',
                             'type': 'button',
                             'value': 'one-minute'
                         },
                         {
-                            'name': 'frequncy',
+                            'name': 'frequency',
                             'text': 'Daily',
                             'type': 'button',
                             'value': 'daily'
                         },
+
                         {
-                            'name': 'frequncy',
+                            'name': 'frequency',
+                            'text': 'Work Days',
+                            'type': 'button',
+                            'value': 'work_days'
+                        },
+                        {
+                            'name': 'frequency',
                             'text': 'Weekly',
                             'type': 'button',
                             'value': 'weekly'
                         },
                                         {
-                            'name': 'frequncy',
+                            'name': 'frequency',
                             'text': 'Cancel',
                             'type': 'button',
                             'value': 'cancel',
@@ -42,14 +49,14 @@ module.exports =  {
         };
     },
 
-    getDailyResponse() {
+    getDailyTimeResponse() {
         return {
             'text': 'Lets get some frequency details',
             'attachments': [
                 {
                     'text': 'What time should I select a facilitator?',
                     'fallback': 'You are unable to schedule a facilitator',
-                    'callback_id': 'randy_details',
+                    'callback_id': 'randy_details_hour',
                     'color': '#3AA3E3',
                     'attachment_type': 'default',
                     'actions': [
@@ -107,7 +114,24 @@ module.exports =  {
                                     "value": "11"
                                 },
                             ]
-                        },
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    getDailyMinuteResponse() {
+        return {
+            'text': 'Lets get some frequency details',
+            'attachments': [
+                {
+                    'text': 'What time should I select a facilitator?',
+                    'fallback': 'You are unable to schedule a facilitator',
+                    'callback_id': 'randy_details_minute',
+                    'color': '#3AA3E3',
+                    'attachment_type': 'default',
+                    'actions': [
                         {
                             "name": "minute_list",
                             "text": "Pick a minute...",
@@ -130,7 +154,24 @@ module.exports =  {
                                     "value": "45"
                                 }
                             ]
-                        },
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    getAmPmFrequency() {
+        return {
+            'text': 'Lets get some frequency details',
+            'attachments': [
+                {
+                    'text': 'What time should I select a facilitator?',
+                    'fallback': 'You are unable to schedule a facilitator',
+                    'callback_id': 'randy_details_minute',
+                    'color': '#3AA3E3',
+                    'attachment_type': 'default',
+                    'actions': [
                         {
                             "name": "am_pm_list",
                             "text": "Night or day...",
@@ -143,21 +184,6 @@ module.exports =  {
                                 {
                                     "text": "PM",
                                     "value": "pm"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "daily_type_list",
-                            "text": "Everyday or just the work week...",
-                            "type": "select",
-                            "options": [
-                                {
-                                    "text": "Daily",
-                                    "value": "daily"
-                                },
-                                {
-                                    "text": "Work week",
-                                    "value": "work_week"
                                 }
                             ]
                         }

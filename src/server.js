@@ -1,12 +1,20 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 // const url = require('url');
 // const request = require('request');
 const interactiveResponse = require('./interactiveResponse');
-
+const mongoose = require('mongoose');
+require('./model/SchedulingSession');
+const SchedulingSession = mongoose.model('SchedulingSession');
+const mongoose_id = process.env.MONGOOSE_USER_ID || '';
+const mongoose_password = process.env.MONGOOSE_PASSWORD || '';
+const mongoose_url = process.env.MONGOOSE_URL;
 
 const app = express();
 const port = process.env.PORT || 3005;
+console.log(`mongodb://${mongoose_id}:${mongoose_password}@${mongoose_url}`);
+mongoose.connect(`mongodb://${mongoose_id}:${mongoose_password}@${mongoose_url}`);
 
 const API = '/slack';
 
@@ -21,6 +29,10 @@ app.post(`${API}/random-facilitator`, (req, res) => {
 });
 
 app.post(`${API}/frequency`, (req, res) => {
+    // SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
+
+    // });
+    console.log(req.payload);
     res.send(interactiveResponse.getDailyResponse());
 });
 
