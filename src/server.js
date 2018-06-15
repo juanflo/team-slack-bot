@@ -98,7 +98,7 @@ function sendNewSelectionToChannel(channel_id) {
                 }
             }
             request(options, (error, response, body) => {
-                console.log(error)
+                console.log(`Error sending post message: ${error}`)
             })
         })
     })
