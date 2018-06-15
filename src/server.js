@@ -91,12 +91,9 @@ function sendNewSelectionToChannel(channel_id) {
                 url: `https://slack.com/api/chat.postMessage`,
                 method: 'POST',
                 'Content-Type': 'application/json',
-                json: true,
-                body: {
-                    token: oauth_token,
-                    text: `${name} has been picked!`,
-                    channel: channel_id
-                }
+                token: oauth_token,
+                text: `${name} has been picked!`,
+                channel: channel_id
             }
             request(options, (error, response, body) => {
                 console.log(`Error sending post message: error:${error} response:${JSON.stringify(response)} body:${JSON.stringify(body)}`)
