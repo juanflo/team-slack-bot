@@ -92,7 +92,7 @@ function sendNewSelectionToChannel(channel_id) {
                 'Content-Type': 'application/json',
                 json: true,
                 body: {
-                    verification_token: verification_token,
+                    token: verification_token,
                     text: `${name} has been picked!`,
                     channel: channel_id
                 }
@@ -100,6 +100,15 @@ function sendNewSelectionToChannel(channel_id) {
             request(options, (error, response, body) => {
                 console.log(`Error sending post message: ${error}`)
             })
+            // const options = {
+            //     url: 'https://slack.com/api/chat.postMessage',
+            //     form: {
+            //         token
+            //     }
+            // }
+            // request.post(options, (error, response, body) => {
+
+            // });
         })
     })
 }
