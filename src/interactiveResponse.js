@@ -49,7 +49,7 @@ module.exports =  {
         };
     },
 
-    getDailyTimeResponse() {
+    getDailyHourResponse() {
         return {
             'text': 'Lets get some frequency details',
             'attachments': [
@@ -65,10 +65,6 @@ module.exports =  {
                             "text": "Pick an hour...",
                             "type": "select",
                             "options": [
-                                {
-                                    "text": "12",
-                                    "value": "12"
-                                },
                                 {
                                     "text": "1",
                                     "value": "1"
@@ -113,6 +109,10 @@ module.exports =  {
                                     "text": "11",
                                     "value": "11"
                                 },
+                                {
+                                    "text": "12",
+                                    "value": "12"
+                                }
                             ]
                         }
                     ]
@@ -168,7 +168,7 @@ module.exports =  {
                 {
                     'text': 'What time should I select a facilitator?',
                     'fallback': 'You are unable to schedule a facilitator',
-                    'callback_id': 'randy_details_minute',
+                    'callback_id': 'randy_details_ampm',
                     'color': '#3AA3E3',
                     'attachment_type': 'default',
                     'actions': [
