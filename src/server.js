@@ -21,8 +21,7 @@ app.post(`${API}/random-facilitator`, (req, res) => {
 });
 
 app.post(`${API}/frequency`, (req, res) => {
-    console.log(req);
-    res.status(200).send(interactiveResponse.getDailyResponse());
+    res.send(interactiveResponse.getDailyResponse());
 });
 
 app.post(`${API}/schedule`, (req, res) => {
