@@ -14,11 +14,18 @@ const mongoose_id = process.env.MONGOOSE_USER_ID || '';
 const mongoose_password = process.env.MONGOOSE_PASSWORD || '';
 const mongoose_url = process.env.MONGOOSE_URL;
 const verification_token = process.env.VERIFICATION_TOKEN || '';
+const timer_interval = process.env.TIMER_INTERVAL || 10000;
 
 const app = express();
 const port = process.env.PORT || 3005;
 
-mongoose.connect(`mongodb://${mongoose_id}:${mongoose_password}@${mongoose_url}`);
+mongoose.connect(`mongodb://${mongoose_id}:${mongoose_password}@${mongoose_url}`, (err, db) => {
+    if (err !== null) {
+        console.log(err)
+    } else {
+        _init();
+    }
+});
 
 const API = '/slack';
 
@@ -68,8 +75,30 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => console.log(`bot listening on port ${port}`));
 
-function sendNewSelectionToChannel() {
+function sendNewSelectionToChannel(channel_id) {
+    request.get(`https://slack.com/api/channels.info?token=${verification_token}&channel=${channel_id}`, (error, response, body) => {
+        const members = JSON.parse(body).channel.members;
+        const randomUser = members[Math.floor(Math.random() * members.length)];
 
+        request.get(`https://slack.com/api/channels.info?token=${verification_token}&user=${randomUser}`, (error, response, body) => {
+            const name = JSON.parse(body).user.real_name;
+            const msg = interactiveResponse.getUserPickedMessage(name);
+            const options = {
+                url: `https://slack.com/api/chat.postMessage`,
+                method: 'POST',
+                'Content-Type': 'application/json',
+                json: true,
+                body: {
+                    verification_token: verification_token,
+                    attachments: msg,
+                    channel: channel_id
+                }
+            }
+            request(options, (error, response, body) => {
+                console.log(error)
+            })
+        })
+    })
 }
 
 function _saveScheduling(user_id, channel_id, type, typeData) {
@@ -93,12 +122,32 @@ function _setupSchedule(user_id, channel_id, type) {
             switch(type) {
                 case 'one-minute':
                     const currentTime = moment().add(1, 'm');
+                    console.log(currentTime.utc().format('YYYYMMDDHHmm'));
                     let saveDate = new ScheduleSession({
-                        alert_time: currentTime.format('YYYYMMDDHHmm'),
+                        alert_time: currentTime.utc().format('YYYYMMDDHHmm'),
                         channel_id: channel_id
                     });
                     saveDate.save()
             }
+        }
+    });
+}
+
+function _init() {
+    _start();
+    setInterval(_start, timer_interval)
+}
+
+function _start(){
+    const currentTime = moment().utc().format('YYYYMMDDHHmm');
+    console.log(`retrieving schedules for ${currentTime}`);
+    Schedule.find({alert_time: currentTime}, (err, data) => {
+        if(err) {
+            console.log(err);
+        } else {
+            data.forEach(item => {
+                sendNewSelectionToChannel(item.channel_id);
+            })
         }
     });
 }

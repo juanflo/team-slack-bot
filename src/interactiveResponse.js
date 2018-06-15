@@ -191,5 +191,28 @@ module.exports =  {
                 }
             ]
         }
+    },
+
+    getUserPickedMessage(user) {
+        return {
+            'text': `${user} has been picked!`,
+            'attachments': [
+                {
+                    'text': `Would you like to skip ${user}?`,
+                    'fallback': '',
+                    'callback_id': 'randy_next_user',
+                    'color': '#3AA3E3',
+                    'attachment_type': 'default',
+                    'actions': [
+                        {
+                            'name': 'next',
+                            'text': 'Next',
+                            'type': 'button',
+                            'value': 'next'
+                        }
+                    ]
+                }
+            ]
+        }
     }
 }
