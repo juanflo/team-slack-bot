@@ -87,16 +87,12 @@ function sendNewSelectionToChannel(channel_id) {
             // console.log(JSON.parse(body));
             const name = JSON.parse(body).user.real_name;
             const msg = interactiveResponse.getUserPickedMessage(name);
-            const options = {
-                url: `https://slack.com/api/chat.postMessage?token=${oauth_token}`,
-                method: 'POST',
-                'Content-Type': 'application/json',
-                body: {
-                    text: `${name} has been picked!`,
-                    channel: channel_id
-                }
-            }
-            request(options, (error, response, body) => {
+            // const options = {
+            //     url: `https://slack.com/api/chat.postMessage?token=${oauth_token}&text=${name}%20has%20been%20picked&channel=${channel_id}`,
+            //     method: 'POST',
+            //     'Content-Type': 'application/json'
+            // }
+            request(`https://slack.com/api/chat.postMessage?token=${oauth_token}&text=${name}%20has%20been%20picked&channel=${channel_id}`, (error, response, body) => {
                 console.log(`Error sending post message: error:${error} response:${JSON.stringify(response)} body:${JSON.stringify(body)}`)
             })
             // const options = {
