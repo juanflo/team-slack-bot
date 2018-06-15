@@ -6,9 +6,10 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 var request = require('request');
 require('./model/SchedulingSession');
+require('./model/Schedule');
 
 const SchedulingSession = mongoose.model('SchedulingSession');
-const ScheduleSession = mongoose.model('ScheduleSession');
+const Schedule = mongoose.model('Schedule');
 const mongoose_id = process.env.MONGOOSE_USER_ID || '';
 const mongoose_password = process.env.MONGOOSE_PASSWORD || '';
 const mongoose_url = process.env.MONGOOSE_URL;
@@ -68,7 +69,7 @@ app.use((err, req, res, next) => {
 app.listen(port, () => console.log(`bot listening on port ${port}`));
 
 function sendNewSelectionToChannel() {
-    
+
 }
 
 function _saveScheduling(user_id, channel_id, type, typeData) {
