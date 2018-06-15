@@ -48,7 +48,7 @@ app.post(`${API}/frequency`, (req, res) => {
 
     if (callback_id === CALLBACK_ID.FREQUENCY) {
         if (payload.actions[0].selected_options[0].value === 'one-minute'){
-            res.status(200);
+            res.status(200).send('I will now randomly select a user every minute.');
         } else if (payload.actions[0].selected_options[0].value === 'daily') {
             res.status(200).send(interactiveResponse.getDailyHourResponse());
         }
