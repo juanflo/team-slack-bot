@@ -32,7 +32,7 @@ app.post(`${API}/frequency`, (req, res) => {
     // SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
 
     // });
-    console.log(req.payload);
+    console.log(req);
     res.send(interactiveResponse.getDailyTimeResponse());
 });
 
