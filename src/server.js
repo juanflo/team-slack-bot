@@ -81,6 +81,7 @@ function sendNewSelectionToChannel(channel_id) {
         const randomUser = members[Math.floor(Math.random() * members.length)];
 
         request.get(`https://slack.com/api/channels.info?token=${verification_token}&user=${randomUser}`, (error, response, body) => {
+            console.log(JSON.parse(body));
             const name = JSON.parse(body).user.real_name;
             const msg = interactiveResponse.getUserPickedMessage(name);
             const options = {
