@@ -14,6 +14,7 @@ const mongoose_id = process.env.MONGOOSE_USER_ID || '';
 const mongoose_password = process.env.MONGOOSE_PASSWORD || '';
 const mongoose_url = process.env.MONGOOSE_URL;
 const verification_token = process.env.VERIFICATION_TOKEN || '';
+const oauth_token = process.env.OAUTH_TOKEN || '';
 const timer_interval = process.env.TIMER_INTERVAL || 10000;
 
 const app = express();
@@ -92,7 +93,7 @@ function sendNewSelectionToChannel(channel_id) {
                 'Content-Type': 'application/json',
                 json: true,
                 body: {
-                    token: verification_token,
+                    token: oauth_token,
                     text: `${name} has been picked!`,
                     channel: channel_id
                 }
