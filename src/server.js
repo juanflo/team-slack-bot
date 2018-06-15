@@ -3,10 +3,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const interactiveResponse = require('./interactiveResponse');
 const mongoose = require('mongoose');
+const moment = require('moment');
 var request = require('request');
 require('./model/SchedulingSession');
 
 const SchedulingSession = mongoose.model('SchedulingSession');
+const ScheduleSession = mongoose.model('ScheduleSession');
 const mongoose_id = process.env.MONGOOSE_USER_ID || '';
 const mongoose_password = process.env.MONGOOSE_PASSWORD || '';
 const mongoose_url = process.env.MONGOOSE_URL;
@@ -65,10 +67,12 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => console.log(`bot listening on port ${port}`));
 
+function sendNewSelectionToChannel() {
+    
+}
+
 function _saveScheduling(user_id, channel_id, type, typeData) {
-    console.log('save scheduling');
     SchedulingSession.findOne({'channel_id': channel_id, 'user_id': user_id}, (err, data) => {
-        console.log('data search ', data, err);
         let newData = data == null ? new SchedulingSession() : data;
         newData.user_id = user_id;
         newData.channel_id = channel_id;
@@ -83,12 +87,17 @@ function _saveScheduling(user_id, channel_id, type, typeData) {
 
 function _setupSchedule(user_id, channel_id, type) {
     SchedulingSession.findOne({'channel_id': channel_id, 'user_id': user_id}, (err, data) => {
-        console.log(`setup data: ${data}`)
         if (data) {
-            request.get(`https://slack.com/api/channels.info?token=${verification_token}&channel=${channel_id}&include_locale=true`, function (error, response, body) {
-                console.log(response);
-                console.log(body);
-            });
+            console.log(type);
+            switch(type) {
+                case 'one-minute':
+                    const currentTime = moment().add(1, 'm');
+                    let saveDate = new ScheduleSession({
+                        alert_time: currentTime.format('YYYYMMDDHHmm'),
+                        channel_id: channel_id
+                    });
+                    saveDate.save()
+            }
         }
     });
 }
