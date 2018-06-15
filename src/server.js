@@ -52,6 +52,7 @@ console.log('/frequency');
 
     if (callback_id === CALLBACK_ID.FREQUENCY) {
         if (payload.actions[0].selected_options[0].value === 'one-minute'){
+            _setupSchedule(user_id, channel_id);
             res.status(200).send('I will now randomly select a user every minute.');
         } else if (payload.actions[0].selected_options[0].value === 'daily') {
             res.status(200).send(interactiveResponse.getDailyHourResponse());
@@ -61,10 +62,6 @@ console.log('/frequency');
     }
 });
 
-app.post(`${API}/schedule`, (req, res) => {
-
-});
-
 app.use((err, req, res, next) => {
     console.log(err.stack);
     res.status(400).send(err.message);
@@ -72,16 +69,23 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => console.log(`bot listening on port ${port}`));
 
-function _saveScheduling(user_id, channel_id, type, data) {
+function _saveScheduling(user_id, channel_id, type, typeData) {
     SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
+        console.log(data, err);
         let newData = data == null ? new SchedulingSession() : data;
         newData.user_id = user_id;
         newData.channel_id = channel_id;
-        newData[type] = data;
+        newData[type] = typeData;
         newData.save().then((err) => {
             if (err != null) {
                 console.log(err);
             }
         });
+    });
+}
+
+function _setupSchedule(user_id, channel_id, type) {
+    SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
+        
     });
 }
