@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const url = require('url');
-const request = require('request');
-const interactiveResponse = require('interactiveResponse');
+// const url = require('url');
+// const request = require('request');
+const interactiveResponse = require('./interactiveResponse');
 
 
 const app = express();
