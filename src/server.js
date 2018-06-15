@@ -37,11 +37,12 @@ app.post(`${API}/random-facilitator`, (req, res) => {
 app.post(`${API}/frequency`, (req, res) => {
 console.log('/frequency');
     const payload = req.body.payload;
+    console.log(payload);
     const callback_id = payload.callback_id;
     const channel_id = payload.channel.id;
     const user_id = payload.user.id;
 
-    console.log(payload);
+    
     console.log(`callback_id: ${callback_id}, channel_id: ${channel_id}, user_id: ${user_id}`);
     console.log(payload.actions[0].selected_options[0].value);
 
