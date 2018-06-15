@@ -48,7 +48,7 @@ app.post(`${API}/frequency`, (req, res) => {
 
     if (callback_id === CALLBACK_ID.FREQUENCY) {
         if (payload.actions[0].value === 'one-minute'){
-            _setupSchedule(user_id, channel_id);
+            _setupSchedule(user_id, channel_id, );
             res.status(200).send('I will now randomly select a user every minute.');
         } else if (payload.actions[0].value === 'daily') {
             res.status(200).send(interactiveResponse.getDailyHourResponse());
@@ -67,10 +67,9 @@ app.listen(port, () => console.log(`bot listening on port ${port}`));
 
 function _saveScheduling(user_id, channel_id, type, typeData) {
     console.log('save scheduling');
-    SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
+    SchedulingSession.findOne({'channel_id': channel_id, 'user_id': user_id}, (err, data) => {
         console.log('data search ', data, err);
         let newData = data == null ? new SchedulingSession() : data;
-
         newData.user_id = user_id;
         newData.channel_id = channel_id;
         newData[type] = typeData;
@@ -83,7 +82,8 @@ function _saveScheduling(user_id, channel_id, type, typeData) {
 }
 
 function _setupSchedule(user_id, channel_id, type) {
-    SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
+    SchedulingSession.findOne({'channel_id': channel_id, 'user_id': user_id}, (err, data) => {
+        console.log(`setup data: ${data}`)
         if (data) {
             request.get(`https://slack.com/api/channels.info?token=${verification_token}&channel=${channel_id}&include_locale=true`, function (error, response, body) {
                 console.log(response);
