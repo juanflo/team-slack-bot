@@ -3,12 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const interactiveResponse = require('./interactiveResponse');
 const mongoose = require('mongoose');
+var request = require('request');
 require('./model/SchedulingSession');
 
 const SchedulingSession = mongoose.model('SchedulingSession');
 const mongoose_id = process.env.MONGOOSE_USER_ID || '';
 const mongoose_password = process.env.MONGOOSE_PASSWORD || '';
 const mongoose_url = process.env.MONGOOSE_URL;
+const verification_token = process.env.VERIFICATION_TOKEN || '';
 
 const app = express();
 const port = process.env.PORT || 3005;
@@ -35,7 +37,6 @@ app.post(`${API}/random-facilitator`, (req, res) => {
 });
 
 app.post(`${API}/frequency`, (req, res) => {
-console.log('/frequency');
     const payload = JSON.parse(req.body.payload);
     const callback_id = payload.callback_id;
     const channel_id = payload.channel.id;
@@ -69,6 +70,7 @@ function _saveScheduling(user_id, channel_id, type, typeData) {
     SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
         console.log('data search ', data, err);
         let newData = data == null ? new SchedulingSession() : data;
+
         newData.user_id = user_id;
         newData.channel_id = channel_id;
         newData[type] = typeData;
@@ -82,6 +84,11 @@ function _saveScheduling(user_id, channel_id, type, typeData) {
 
 function _setupSchedule(user_id, channel_id, type) {
     SchedulingSession.findOne({'channel_id': 1234, 'user_id': 123434}, (err, data) => {
-        
+        if (data) {
+            request.get(`https://slack.com/api/channels.info?token=${verification_token}&channel=${channel_id}&include_locale=true`, function (error, response, body) {
+                console.log(response);
+                console.log(body);
+            });
+        }
     });
 }
