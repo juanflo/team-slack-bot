@@ -33,7 +33,7 @@ app.post(`${API}/frequency`, (req, res) => {
 
     // });
     console.log(req.payload);
-    res.send(interactiveResponse.getDailyResponse());
+    res.send(interactiveResponse.getDailyTimeResponse());
 });
 
 app.post(`${API}/schedule`, (req, res) => {
