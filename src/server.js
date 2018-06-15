@@ -77,13 +77,13 @@ app.listen(port, () => console.log(`bot listening on port ${port}`));
 
 function sendNewSelectionToChannel(channel_id) {
     request.get(`https://slack.com/api/channels.info?token=${verification_token}&channel=${channel_id}`, (error, response, body) => {
-        console.log(`channel info: ${body}`);
+        // console.log(`channel info: ${body}`);
         const members = JSON.parse(body).channel.members;
         const randomUser = members[Math.floor(Math.random() * members.length)];
 
         request.get(`https://slack.com/api/users.info?token=${verification_token}&user=${randomUser}`, (error, response, body) => {
-            console.log(`channel: ${channel_id}`);
-            console.log(JSON.parse(body));
+            // console.log(`channel: ${channel_id}`);
+            // console.log(JSON.parse(body));
             const name = JSON.parse(body).user.real_name;
             const msg = interactiveResponse.getUserPickedMessage(name);
             const options = {
@@ -93,7 +93,7 @@ function sendNewSelectionToChannel(channel_id) {
                 json: true,
                 body: {
                     verification_token: verification_token,
-                    attachments: msg,
+                    text: `${name} has been picked!`,
                     channel: channel_id
                 }
             }
