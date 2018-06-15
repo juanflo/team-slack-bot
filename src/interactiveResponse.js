@@ -7,7 +7,7 @@ module.exports =  {
                 {
                     'text': 'How frequent do you want to me to choose someone?',
                     'fallback': 'You are unable to schedule a facilitator',
-                    'callback_id': 'randy_scheduler',
+                    'callback_id': 'randy_frequency',
                     'color': '#3AA3E3',
                     'attachment_type': 'default',
                     'actions': [
@@ -49,7 +49,7 @@ module.exports =  {
                 {
                     'text': 'What time should I select a facilitator?',
                     'fallback': 'You are unable to schedule a facilitator',
-                    'callback_id': 'randy_scheduler',
+                    'callback_id': 'randy_details',
                     'color': '#3AA3E3',
                     'attachment_type': 'default',
                     'actions': [
